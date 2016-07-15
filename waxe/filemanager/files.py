@@ -1,6 +1,49 @@
 import os
 
 
+def relative_path(root_path, path):
+    """Make a relative path
+
+    :param path: the path we want to transform as relative
+    :type path: str
+    :param root_path: the root path
+    :type root_path: str
+
+    ;return: the relative path from given path according to root_path
+    :rtype: str
+    ..note:: The path should be in root_path. If it's not the case it raises
+    and IOError exception.
+    """
+    path = os.path.normpath(path)
+    root_path = os.path.normpath(root_path)
+    relpath = os.path.relpath(path, root_path)
+    abspath = os.path.normpath(os.path.join(root_path, relpath))
+    if not abspath.startswith(root_path):
+        # Forbidden path
+        raise IOError("%s doesn't exist" % path)
+    return relpath
+
+
+def absolute_path(root_path, relpath):
+    """Make an absolute relpath
+
+    :param relpath: the relative path we want to transform as absolute
+    :type relpath: str
+    :param root_path: the root path
+    :type root_path: str
+
+    ;return: the absolute path from given relpath according to root_path
+    :rtype: str
+    """
+    relpath = os.path.normpath(relpath)
+    root_path = os.path.normpath(root_path)
+    abspath = os.path.normpath(os.path.join(root_path, relpath))
+    if not abspath.startswith(root_path):
+        # Forbidden path
+        raise IOError("%s doesn't exist" % relpath)
+    return abspath
+
+
 def _append_file(filename, directory, lis, exts=None):
     filename = filename.decode('utf-8')
     if filename.startswith('.'):
