@@ -45,7 +45,6 @@ def absolute_path(root_path, relpath):
 
 
 def _append_file(filename, directory, lis, exts=None):
-    filename = filename.decode('utf-8')
     if filename.startswith('.'):
         return
     if exts:

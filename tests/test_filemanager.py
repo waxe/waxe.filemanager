@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import shutil
 
@@ -104,6 +106,11 @@ class TestFunctions(unittest.TestCase):
         filename = '.file.txt'
         _append_file(filename, directory, lis, exts)
         self.assertEqual(lis, [])
+
+        lis = []
+        filename = u'filé.txt'
+        _append_file(filename, directory, lis, exts)
+        self.assertEqual(lis, [u'dir/filé.txt'])
 
     def test_get_folders_and_files(self):
         try:
